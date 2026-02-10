@@ -1,0 +1,55 @@
+{
+  "name": "discord-management-bot",
+  "version": "2.0.0",
+  "description": "Advanced Discord management bot with full MEE6 feature parity",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "deploy": "tsx scripts/deploy-commands.ts",
+    "test": "jest --coverage",
+    "test:unit": "jest --testPathPattern=tests/unit",
+    "test:integration": "jest --testPathPattern=tests/integration",
+    "test:watch": "jest --watch",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix",
+    "format": "prettier --write 'src/**/*.ts'",
+    "db:migrate": "tsx scripts/migrate.ts"
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "management",
+    "discord.js",
+    "leveling"
+  ],
+  "author": "Your Team",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^14.14.1",
+    "pg": "^8.11.3",
+    "redis": "^4.6.12",
+    "dotenv": "^16.3.1",
+    "winston": "^3.11.0",
+    "axios": "^1.6.5",
+    "cron": "^3.1.6",
+    "zod": "^3.22.4",
+    "@openrouter/sdk": "*",
+    "ollama": "^0.5.0",
+    "ioredis": "^5.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/pg": "^8.10.9",
+    "@typescript-eslint/eslint-plugin": "^6.18.1",
+    "@typescript-eslint/parser": "^6.18.1",
+    "eslint": "^8.56.0",
+    "jest": "^29.7.0",
+    "@types/jest": "^29.5.11",
+    "ts-jest": "^29.1.1",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3",
+    "prettier": "^3.1.1"
+  }
+}
