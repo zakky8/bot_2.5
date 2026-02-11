@@ -24,14 +24,19 @@ export default (bot: Bot<BotContext>) => {
           '`/aisetup status`\n\n' +
           '*Examples:*\n' +
           '`/aisetup key sk_your_actual_key_here`\n' +
-          '`/aisetup model anthropic/claude-3-sonnet`\n\n' +
-          '*Available OpenRouter Models:*\n' +
-          '• `anthropic/claude-3-haiku` (fast, cheap)\n' +
-          '• `anthropic/claude-3-sonnet` (balanced)\n' +
-          '• `anthropic/claude-3-opus` (most powerful)\n' +
-          '• `openai/gpt-4`\n' +
-          '• `meta-llama/llama-2-70b`\n\n' +
-          '📖 Get your key at: https://openrouter.ai/',
+          '`/aisetup model anthropic/claude-3-opus`\n\n' +
+          '*Popular Models (any OpenRouter model works):*\n' +
+          '• `anthropic/claude-3-haiku` - Fast & cheap\n' +
+          '• `anthropic/claude-3-sonnet` - Balanced\n' +
+          '• `anthropic/claude-3-opus` - Most powerful\n' +
+          '• `openai/gpt-4` - GPT-4\n' +
+          '• `openai/gpt-4-turbo` - GPT-4 Turbo\n' +
+          '• `openai/gpt-3.5-turbo` - GPT-3.5\n' +
+          '• `google/gemini-2.0-flash` - Google Gemini\n' +
+          '• `meta-llama/llama-2-70b` - Llama\n' +
+          '• `mistralai/mistral-7b` - Mistral\n\n' +
+          '📖 View all models: https://openrouter.ai/docs#models\n' +
+          '🔑 Get API key: https://openrouter.ai/',
           { parse_mode: 'Markdown' }
         );
       }
@@ -53,13 +58,13 @@ export default (bot: Bot<BotContext>) => {
 
       if (command === 'model') {
         if (!value) {
-          return ctx.reply('❌ Please provide a model name:\n`/aisetup model anthropic/claude-3-haiku`');
+          return ctx.reply('❌ Please provide a model name:\n`/aisetup model anthropic/claude-3-haiku`\n\n📖 All OpenRouter models supported: https://openrouter.ai/docs#models');
         }
         // @ts-ignore
         process.env.OPENROUTER_MODEL = value;
         reinitializeAIService();
-        const envMsg = '✅ Model changed to: ' + value + '\n✅ AI service updated\n\nTo make permanent, add to .env:\nOPENROUTER_MODEL=' + value;
-        return ctx.reply(envMsg);
+        const envMsg = '✅ Model changed to: `' + value + '`\n✅ AI service updated\n\n📝 To make permanent, add to `.env`:\n`OPENROUTER_MODEL=' + value + '`\n\n📖 View all models: https://openrouter.ai/docs#models';
+        return ctx.reply(envMsg, { parse_mode: 'Markdown' });
       }
 
       if (command === 'status') {
