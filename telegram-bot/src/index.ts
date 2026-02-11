@@ -9,12 +9,13 @@ const i18n = new I18n<BotContext>({
 });
 
 // Use middlewares
+import 'dotenv/config';
 import { RedisAdapter } from '@grammyjs/storage-redis';
 import Redis from 'ioredis';
 import { run } from '@grammyjs/runner';
-import { config } from 'dotenv';
 import { readdirSync, existsSync, statSync } from 'fs';
 import { join } from 'path';
+import { pathToFileURL } from 'url';
 import { createLogger } from './core/logger';
 import { connectDatabase } from './core/database';
 import { connectRedis } from './core/redis';
@@ -24,7 +25,7 @@ import { loggingMiddleware } from './middlewares/logging';
 import { errorHandler } from './middlewares/errorHandler';
 import { BotContext, SessionData } from './types';
 
-config();
+
 
 const logger = createLogger('Main');
 
@@ -75,7 +76,7 @@ async function loadCommands() {
     for (const file of commandFiles) {
       const filePath = join(folderPath, file);
       try {
-        const command = await import(filePath);
+        const command = await import(pathToFileURL(filePath).href);
         if (command.default && typeof command.default === 'function') {
           command.default(bot);
           logger.info(`Loaded command: ${folder}/${file}`);
@@ -101,7 +102,7 @@ async function loadHandlers() {
   for (const file of handlerFiles) {
     const filePath = join(handlersPath, file);
     try {
-      const handler = await import(filePath);
+      const handler = await import(pathToFileURL(filePath).href);
       if (handler.default && typeof handler.default === 'function') {
         handler.default(bot);
         logger.info(`Loaded handler: ${file}`);

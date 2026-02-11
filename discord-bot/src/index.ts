@@ -1,12 +1,13 @@
+import 'dotenv/config';
 import { Client, GatewayIntentBits, Collection, REST, Routes } from 'discord.js';
-import { config } from 'dotenv';
 import { readdirSync, existsSync, statSync } from 'fs';
 import { join } from 'path';
+import { pathToFileURL } from 'url';
 import { createLogger } from './core/logger';
 import { connectDatabase } from './core/database';
 import { connectRedis } from './core/redis';
 
-config();
+
 
 const logger = createLogger('Main');
 
@@ -46,7 +47,7 @@ async function loadCommands() {
     for (const file of commandFiles) {
       const filePath = join(folderPath, file);
       try {
-        const command = await import(filePath);
+        const command = await import(pathToFileURL(filePath).href);
         const cmd = command.default || command;
 
         if ('data' in cmd && 'execute' in cmd) {
@@ -76,7 +77,7 @@ async function loadEvents() {
   for (const file of eventFiles) {
     const filePath = join(eventsPath, file);
     try {
-      const event = await import(filePath);
+      const event = await import(pathToFileURL(filePath).href);
       const evt = event.default || event;
 
       if (evt.once) {
