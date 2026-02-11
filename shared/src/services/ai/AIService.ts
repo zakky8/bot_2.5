@@ -208,14 +208,16 @@ export class AIService {
 
     try {
       const response: any = await this.openRouter.chat.send({
-        model: modelToUse,
-        messages: messages.map((m) => ({
-          role: m.role,
-          content: m.content,
-        })),
-        max_tokens: this.config.maxTokens,
-        temperature: this.config.temperature,
-      } as any);
+        chatGenerationParams: {
+          model: modelToUse,
+          messages: messages.map((m) => ({
+            role: m.role,
+            content: m.content,
+          })),
+          maxTokens: this.config.maxTokens,
+          temperature: this.config.temperature,
+        },
+      });
 
       const choice = response.choices?.[0];
       if (!choice || !choice.message?.content) {
