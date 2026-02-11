@@ -1,3 +1,5 @@
+/// <reference types="jest" />
+import { describe, test, expect, beforeEach } from '@jest/globals';
 import { AIService } from '../src/services/ai/AIService';
 import { MemoryRedis } from '../src/utils/MemoryRedis';
 import { createLogger, transports } from 'winston';
