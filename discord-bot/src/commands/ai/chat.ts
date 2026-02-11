@@ -27,6 +27,19 @@ export default {
                 const context = await aiService.getConversationContext(userId, interaction.guildId || undefined, 'discord');
                 const result = await aiService.chat(context, message);
                 responseContent = result.content;
+
+                // Add messages to context for conversation memory
+                context.messages.push({
+                  role: 'user',
+                  content: message,
+                });
+                context.messages.push({
+                  role: 'assistant',
+                  content: responseContent,
+                });
+
+                // Save context for next conversation
+                await aiService.saveConversationContext(context);
             } catch (aiError) {
                 console.error('AI Service Error:', aiError);
                 responseContent = "🤖 I'm having trouble connecting to my AI brain right now. (AI Service Unavailable)";

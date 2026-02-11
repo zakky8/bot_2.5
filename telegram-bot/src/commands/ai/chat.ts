@@ -34,6 +34,19 @@ export default (bot: Bot<BotContext>) => {
         const context = await aiService.getConversationContext(userId, ctx.chat?.id.toString(), 'telegram');
         const response = await aiService.chat(context, message);
 
+        // Add assistant response to context
+        context.messages.push({
+          role: 'user',
+          content: message,
+        });
+        context.messages.push({
+          role: 'assistant',
+          content: response.content,
+        });
+
+        // Save context for next message
+        await aiService.saveConversationContext(context);
+
         // Split long messages if needed (Telegram limit is 4096)
         if (response.content.length > 4000) {
           const chunks = response.content.match(/.{1,4000}/g) || [];
