@@ -85,8 +85,8 @@ export class AIService {
       },
     };
 
-    // Initialize OpenRouter if API key is provided
-    if (this.config.openrouterApiKey) {
+    // Initialize OpenRouter if API key is provided (and it's valid)
+    if (this.config.openrouterApiKey && this.config.openrouterApiKey !== 'your_openrouter_key_here') {
       try {
         this.openRouter = new OpenRouter({
           apiKey: this.config.openrouterApiKey,
@@ -95,6 +95,8 @@ export class AIService {
       } catch (error) {
         this.logger.error('Failed to initialize OpenRouter:', error);
       }
+    } else if (this.config.openrouterApiKey === 'your_openrouter_key_here') {
+      this.logger.warn('OpenRouter API key not configured (using placeholder). Please set OPENROUTER_API_KEY to use OpenRouter.');
     }
 
     // Initialize Ollama
@@ -316,7 +318,8 @@ export class AIService {
 
     try {
       // Try OpenRouter first unless Ollama-only is specified
-      if (!options?.useOllamaOnly && this.openRouter) {
+      // Only use OpenRouter if it was successfully initialized with a real API key
+      if (!options?.useOllamaOnly && this.openRouter && this.config.openrouterApiKey && this.config.openrouterApiKey !== 'your_openrouter_key_here') {
         response = await this.generateWithOpenRouter(messages, options?.model);
       } else if (this.ollama) {
         response = await this.generateWithOllama(messages, options?.model);
