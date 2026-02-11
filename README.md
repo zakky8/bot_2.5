@@ -135,22 +135,48 @@ upgraded-bot-system/
 
 ## 🔧 Configuration
 
-### Telegram Bot
+### Telegram Bot (Required)
 ```env
-BOT_TOKEN=your_telegram_bot_token
-DATABASE_URL=postgresql://user:pass@localhost:5432/botdb
-REDIS_URL=redis://localhost:6379
-ADMIN_IDS=123456789,987654321
+# Bot token from @BotFather
+BOT_TOKEN=1440343131:AAEeMXN_E0x8K70AkRrn5FenKNTr8cutbzE
+
+# Database connection
+DATABASE_URL=postgresql://botuser:password@localhost:5432/bot_system
+
+# Redis cache
+REDIS_URL=redis://:password@localhost:6379
+
+# Logging level
 LOG_LEVEL=info
+
+# Telegram admin user IDs (comma-separated)
+ADMIN_IDS=123456789,987654321
+
+# Optional: AI chat feature
+OPENROUTER_API_KEY=sk_your_openrouter_key
+OPENROUTER_MODEL=anthropic/claude-3-haiku
 ```
 
-### Discord Bot
+### Discord Bot (Required)
 ```env
-BOT_TOKEN=your_discord_bot_token
-CLIENT_ID=your_client_id
-DATABASE_URL=postgresql://user:pass@localhost:5432/botdb
-REDIS_URL=redis://localhost:6379
+# Bot token from Discord Developer Portal
+BOT_TOKEN=your_discord_bot_token_here
+
+# Client ID from Discord Developer Portal
+CLIENT_ID=your_client_id_here
+
+# Database connection
+DATABASE_URL=postgresql://botuser:password@localhost:5432/bot_system
+
+# Redis cache
+REDIS_URL=redis://:password@localhost:6379
+
+# Logging level
 LOG_LEVEL=info
+
+# Optional: AI chat feature
+OPENROUTER_API_KEY=sk_your_openrouter_key
+OPENROUTER_MODEL=anthropic/claude-3-haiku
 ```
 
 ## 🧪 Testing
