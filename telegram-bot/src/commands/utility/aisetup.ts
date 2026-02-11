@@ -52,14 +52,28 @@ export default (bot: Bot<BotContext>) => {
         // @ts-ignore
         process.env.OPENROUTER_API_KEY = value;
         reinitializeAIService();
-        const keyMsg = '✅ API Key set! (This session only)\n✅ OpenRouter provider activated\n\nTo make permanent, add to .env:\nOPENROUTER_API_KEY=' + value.substring(0, 20) + '...';
-        return ctx.reply(keyMsg);
+        const keyMsg = '✅ API Key set! (This session only)\n✅ OpenRouter provider activated\n\n📋 *Next steps:*\n1. Set a model: `/aisetup model openai/gpt-4-turbo`\n2. Test connection: `/aisetup test`\n3. Start chatting: `/chat hello`\n\n📝 To make permanent, add to `.env`:\n`OPENROUTER_API_KEY=' + value.substring(0, 20) + '...`';
+        return ctx.reply(keyMsg, { parse_mode: 'Markdown' });
       }
 
       if (command === 'model') {
         if (!value) {
           return ctx.reply('❌ Please provide a model name:\n`/aisetup model anthropic/claude-3-haiku`\n\n📖 All OpenRouter models supported: https://openrouter.ai/docs#models');
         }
+        
+        // Check if API key is set
+        if (!process.env.OPENROUTER_API_KEY) {
+          return ctx.reply(
+            '⚠️ *Warning: No API Key Set*\n\n' +
+            'You must set an OpenRouter API key first:\n' +
+            '`/aisetup key sk_your_key_here`\n\n' +
+            'Then you can set the model:\n' +
+            '`/aisetup model ' + value + '`\n\n' +
+            '📖 Get key at: https://openrouter.ai/',
+            { parse_mode: 'Markdown' }
+          );
+        }
+        
         // @ts-ignore
         process.env.OPENROUTER_MODEL = value;
         reinitializeAIService();
@@ -81,9 +95,16 @@ export default (bot: Bot<BotContext>) => {
 
       if (command === 'test') {
         if (!process.env.OPENROUTER_API_KEY) {
-          return ctx.reply('❌ OpenRouter API key not set. Use: `/aisetup key sk_...`');
+          return ctx.reply(
+            '❌ *OpenRouter API Key Required*\n\n' +
+            'Set your API key first:\n' +
+            '`/aisetup key sk_your_key_here`\n\n' +
+            '📖 Get key at: https://openrouter.ai/',
+            { parse_mode: 'Markdown' }
+          );
         }
 
+        const model = process.env.OPENROUTER_MODEL || 'anthropic/claude-3-haiku';
         await ctx.replyWithChatAction('typing');
         try {
           const userId = ctx.from?.id?.toString() || 'test-user';
@@ -94,9 +115,9 @@ export default (bot: Bot<BotContext>) => {
             messages: [],
           };
           const response = await aiService.chat(context, 'Say "Hello! OpenRouter is working!" in exactly 5 words.');
-          return ctx.reply(`✅ *OpenRouter Connection Successful*\n\n📡 *Provider:* OpenRouter\n🧠 *Response:*\n${response.content}`, { parse_mode: 'Markdown' });
+          return ctx.reply(`✅ *OpenRouter Test Successful*\n\n📡 *Provider:* OpenRouter\n🧠 *Model:* ${model}\n💬 *Response:*\n${response.content}`, { parse_mode: 'Markdown' });
         } catch (error) {
-          return ctx.reply(`❌ *OpenRouter Test Failed*\n\n_Error:_ Invalid API key or rate limit exceeded\n\`${String(error).substring(0, 100)}\``);
+          return ctx.reply(`❌ *OpenRouter Connection Failed*\n\n_Possible issues:_\n• Invalid API key\n• Rate limit exceeded\n• Model not available\n\n\`${String(error).substring(0, 100)}\``, { parse_mode: 'Markdown' });
         }
       }
 
