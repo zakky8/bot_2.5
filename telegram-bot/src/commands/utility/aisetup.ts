@@ -1,6 +1,6 @@
 import { Bot } from 'grammy';
 import { BotContext } from '../../types';
-import { aiService } from '../../core/ai';
+import { aiService, reinitializeAIService } from '../../core/ai';
 
 export default (bot: Bot<BotContext>) => {
   bot.command('aisetup', async (ctx: BotContext) => {
@@ -16,7 +16,7 @@ export default (bot: Bot<BotContext>) => {
 
       if (!args[0]) {
         return ctx.reply(
-          '🤖 *AI Setup Command*\n\n' +
+          '🤖 *OpenRouter AI Setup*\n\n' +
           '*Usage:*\n' +
           '`/aisetup key <your_openrouter_key>`\n' +
           '`/aisetup model <model_name>`\n' +
@@ -25,12 +25,13 @@ export default (bot: Bot<BotContext>) => {
           '*Examples:*\n' +
           '`/aisetup key sk_your_actual_key_here`\n' +
           '`/aisetup model anthropic/claude-3-sonnet`\n\n' +
-          '*Available Models:*\n' +
-          '• `anthropic/claude-3-haiku` (fast)\n' +
+          '*Available OpenRouter Models:*\n' +
+          '• `anthropic/claude-3-haiku` (fast, cheap)\n' +
           '• `anthropic/claude-3-sonnet` (balanced)\n' +
-          '• `anthropic/claude-3-opus` (powerful)\n' +
+          '• `anthropic/claude-3-opus` (most powerful)\n' +
           '• `openai/gpt-4`\n' +
-          '• `meta-llama/llama-2-70b`',
+          '• `meta-llama/llama-2-70b`\n\n' +
+          '📖 Get your key at: https://openrouter.ai/',
           { parse_mode: 'Markdown' }
         );
       }
@@ -45,7 +46,8 @@ export default (bot: Bot<BotContext>) => {
         }
         // @ts-ignore
         process.env.OPENROUTER_API_KEY = value;
-        const keyMsg = '✅ API Key set! (This session only)\n\nTo make it permanent, add to .env:\nOPENROUTER_API_KEY=' + value;
+        reinitializeAIService();
+        const keyMsg = '✅ API Key set! (This session only)\n✅ OpenRouter provider activated\n\nTo make permanent, add to .env:\nOPENROUTER_API_KEY=' + value.substring(0, 20) + '...';
         return ctx.reply(keyMsg);
       }
 
@@ -55,24 +57,26 @@ export default (bot: Bot<BotContext>) => {
         }
         // @ts-ignore
         process.env.OPENROUTER_MODEL = value;
-        const envMsg = '✅ Model changed to: ' + value + '\n\nTo make it permanent, add to .env:\nOPENROUTER_MODEL=' + value;
+        reinitializeAIService();
+        const envMsg = '✅ Model changed to: ' + value + '\n✅ AI service updated\n\nTo make permanent, add to .env:\nOPENROUTER_MODEL=' + value;
         return ctx.reply(envMsg);
       }
 
       if (command === 'status') {
         const hasKey = !!process.env.OPENROUTER_API_KEY;
         const model = process.env.OPENROUTER_MODEL || 'anthropic/claude-3-haiku';
-        const statusMsg = '🤖 *AI Status*\n\n' +
-          `• API Key: ${hasKey ? '✅ Set' : '❌ Not set'}\n` +
-          `• Model: ${model}\n` +
-          `• Status: ${hasKey ? '✅ Ready to chat' : '❌ Need API key'}\n\n` +
-          (hasKey ? 'Try `/chat hello` to start!' : 'Set key with: `/aisetup key sk_...`');
+        const statusMsg = '🤖 *AI Configuration Status*\n\n' +
+          `🔑 *OpenRouter API:* ${hasKey ? '✅ Connected' : '❌ Not configured'}\n` +
+          `🧠 *Model:* ${model}\n` +
+          `📡 *Provider:* ${hasKey ? 'OpenRouter' : 'Ollama (fallback)'}\n` +
+          `⚡ *Status:* ${hasKey ? '✅ Ready to chat' : '⚠️ Limited (using Ollama)'}\n\n` +
+          (hasKey ? 'Try `/chat hello` to start chatting!' : 'Set API key with: `/aisetup key sk_...`');
         return ctx.reply(statusMsg, { parse_mode: 'Markdown' });
       }
 
       if (command === 'test') {
         if (!process.env.OPENROUTER_API_KEY) {
-          return ctx.reply('❌ API key not set. Use: `/aisetup key sk_...`');
+          return ctx.reply('❌ OpenRouter API key not set. Use: `/aisetup key sk_...`');
         }
 
         await ctx.replyWithChatAction('typing');
@@ -84,10 +88,10 @@ export default (bot: Bot<BotContext>) => {
             platform: 'telegram' as const,
             messages: [],
           };
-          const response = await aiService.chat(context, 'Say "Hello! AI is working!" in exactly 5 words.');
-          return ctx.reply(`✅ *AI Test Successful*\n\n_Response:_\n${response.content}`);
+          const response = await aiService.chat(context, 'Say "Hello! OpenRouter is working!" in exactly 5 words.');
+          return ctx.reply(`✅ *OpenRouter Connection Successful*\n\n📡 *Provider:* OpenRouter\n🧠 *Response:*\n${response.content}`, { parse_mode: 'Markdown' });
         } catch (error) {
-          return ctx.reply(`❌ *AI Test Failed*\n\n_Error:_ Check if the API key is valid\n\`${String(error).substring(0, 100)}\``);
+          return ctx.reply(`❌ *OpenRouter Test Failed*\n\n_Error:_ Invalid API key or rate limit exceeded\n\`${String(error).substring(0, 100)}\``);
         }
       }
 

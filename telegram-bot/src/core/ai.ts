@@ -14,7 +14,19 @@ if (process.env.REDIS_URL) {
     redisClient = new MemoryRedis();
 }
 
-export const aiService = new AIService({
-    openrouterApiKey: process.env.OPENROUTER_API_KEY,
-    defaultModel: process.env.OPENROUTER_MODEL || 'anthropic/claude-3-haiku',
-}, redisClient, logger);
+// Function to create AIService with current environment variables
+function createAIService() {
+    return new AIService({
+        openrouterApiKey: process.env.OPENROUTER_API_KEY || '',
+        defaultModel: process.env.OPENROUTER_MODEL || 'anthropic/claude-3-haiku',
+    }, redisClient, logger);
+}
+
+// Initialize aiService
+export let aiService = createAIService();
+
+// Function to reinitialize service (used when API key/model changes)
+export function reinitializeAIService() {
+    aiService = createAIService();
+    logger.info('AI Service reinitialized with new configuration');
+}
