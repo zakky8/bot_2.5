@@ -138,7 +138,7 @@ upgraded-bot-system/
 ### Telegram Bot (Required)
 ```env
 # Bot token from @BotFather
-BOT_TOKEN=1440343131:AAEeMXN_E0x8K70AkRrn5FenKNTr8cutbzE
+BOT_TOKEN=your_telegram_bot_token_here
 
 # Database connection
 DATABASE_URL=postgresql://botuser:password@localhost:5432/bot_system
