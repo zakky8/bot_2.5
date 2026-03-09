@@ -1,200 +1,133 @@
-# Bot Commands Documentation
+# Bot Commands Documentation — Super Bot v3.0
 
-## Discord Bot Commands (52 Total)
-
-### Moderation (16)
-- `/ban` - Ban a user
-- `/kick` - Kick a user
-- `/mute` - Timeout/mute a user
-- `/unmute` - Remove timeout
-- `/warn` - Warn a user
-- `/warnings` - View warnings
-- `/clearwarnings` - Clear user warnings
-- `/clear` - Clear messages
-- `/purge` - Bulk delete messages
-- `/slowmode` - Set channel slowmode
-- `/timeout` - Timeout a user
-- `/unban` - Unban a user
-- `/lockdown` - Lock a channel
-- `/unlock` - Unlock a channel
-- `/reason` - Update case reason
-- `/modlogs` - View moderation logs
-
-### Leveling (12)
-- `/rank` - View rank card
-- `/leaderboard` - View leaderboard
-- `/setlevel` - Set user level
-- `/setxp` - Set user XP
-- `/addxp` - Add XP to user
-- `/removexp` - Remove XP from user
-- `/levelroles` - Manage level roles
-- `/levelconfig` - Configure leveling system
-- `/levelchannel` - Set level-up channel
-- `/levelmessage` - Set level-up message
-- `/xpmultiplier` - Set XP multiplier
-- `/resetlevels` - Reset all levels
-
-### Engagement (7)
-- `/poll` - Create a poll
-- `/giveaway` - Start a giveaway
-- `/endgiveaway` - End a giveaway
-- `/reroll` - Reroll giveaway winner
-- `/reminder` - Set a reminder
-- `/timer` - Start a timer
-- `/birthday` - Set birthday
-
-### Custom Commands (5)
-- `/addcommand` - Add custom command
-- `/editcommand` - Edit custom command
-- `/removecommand` - Remove custom command
-- `/listcommands` - List custom commands
-- `/customcommand` - Manage custom commands
-
-### Reaction Roles (4)
-- `/addrr` - Add reaction role
-- `/removerr` - Remove reaction role
-- `/listrr` - List reaction roles
-- `/reactionrole` - Manage reaction roles
-
-### Social (4)
-- `/twitch` - Twitch notifications
-- `/youtube` - YouTube notifications
-- `/twitter` - Twitter feed
-- `/reddit` - Reddit feed
-
-### Utility (7)
-- `/ping` - Check latency
-- `/help` - View help
-- `/serverinfo` - Server info
-- `/userinfo` - User info
-- `/roleinfo` - Role info
-- `/avatar` - View avatar
-- `/membercount` - Member stats
+## Discord Bot Commands (55 Total)
 
 ### AI (1)
-- `/chat` - Chat with AI
+- `/chat message:<text>` — Ask Claude AI (FAQ knowledge-base constrained answer)
+- `/chat clear:true` — Reset your conversation history
+
+> When Claude cannot answer from the FAQ it replies with an escalation message and notifies the moderator channel (HUMAN_MODERATOR_CHANNEL).
+
+### Moderation (16)
+- `/ban` — Permanently ban a member
+- `/unban` — Remove a ban
+- `/kick` — Kick a member
+- `/mute` — Restrict a member from sending messages
+- `/unmute` — Restore messaging permissions
+- `/timeout` — Apply a Discord native timeout
+- `/warn` — Issue an official warning
+- `/warnings` — View a member's warning history
+- `/clearwarnings` — Clear all warnings for a member
+- `/purge` — Bulk-delete messages in a channel
+- `/clear` — Delete a specific number of messages
+- `/slowmode` — Set channel slow mode
+- `/lockdown` — Lock a channel
+- `/unlock` — Unlock a channel
+- `/modlogs` — View moderation action log for a member
+- `/reason` — Add/update reason for a mod action
+
+### Leveling (12)
+- `/rank` — Show your current XP rank card
+- `/leaderboard` — Server XP leaderboard
+- `/addxp` — Add XP to a member (admin)
+- `/removexp` — Remove XP from a member (admin)
+- `/setxp` — Set exact XP for a member (admin)
+- `/setlevel` — Set a member's level directly (admin)
+- `/resetlevels` — Reset all server levels (admin)
+- `/xpmultiplier` — Set an XP multiplier for a role
+- `/levelroles` — Configure roles awarded at each level
+- `/levelconfig` — Configure XP gain settings
+- `/levelmessage` — Set the level-up notification message
+- `/levelchannel` — Set the channel for level-up messages
+
+### Custom Commands (5)
+- `/addcommand` — Create a custom slash command
+- `/editcommand` — Edit an existing custom command
+- `/removecommand` — Delete a custom command
+- `/listcommands` — Show all custom commands
+- `/customcommand` — Execute a custom command
+
+### Reaction Roles (4)
+- `/reactionrole` — Create a reaction role message
+- `/addrr` — Add a reaction-role pair
+- `/removerr` — Remove a reaction-role pair
+- `/listrr` — List all reaction roles
+
+### Engagement (7)
+- `/poll` — Create a poll with up to 4 options
+- `/giveaway` — Start a giveaway
+- `/endgiveaway` — End a giveaway early
+- `/reroll` — Re-roll a giveaway winner
+- `/reminder` — Set a personal reminder
+- `/timer` — Start a public countdown timer
+- `/birthday` — Register a birthday
+
+### Social Alerts (4)
+- `/twitch` — Subscribe to Twitch live alerts
+- `/youtube` — Subscribe to YouTube upload alerts
+- `/twitter` — Subscribe to Twitter/X post alerts
+- `/reddit` — Subscribe to subreddit new post alerts
+
+### Utility (7)
+- `/help` — Show all available commands
+- `/ping` — Check bot latency
+- `/serverinfo` — Display server details
+- `/userinfo` — Display info about a member
+- `/avatar` — Show a member's avatar
+- `/roleinfo` — Display role permissions
+- `/membercount` — Show current member count
 
 ---
 
-## Telegram Bot Commands (101 Total)
+## Telegram Bot Commands (104 Total)
+
+### AI (3 + aisetup)
+- `/chat <message>` — Ask Claude AI (FAQ-constrained)
+- `/ask <question>` — Alias for /chat
+- `/support <issue>` — Escalate directly to human moderator
+- `/aisetup key|model|status|test|faq` — Configure AI at runtime (admin only)
+
+> Escalation notifies HUMAN_MODERATOR_CHAT_ID automatically.
 
 ### Moderation (22)
-- `/ban` - Ban user
-- `/unban` - Unban user
-- `/kick` - Kick user
-- `/mute` - Mute user
-- `/unmute` - Unmute user
-- `/warn` - Warn user
-- `/unwarn` - Remove warning
-- `/warns` - View warnings
-- `/resetwarns` - Reset warnings
-- `/setwarnlimit` - Set warning limit
-- `/setwarnmode` - Set warning action
-- `/purge` - Delete messages
-- `/spurge` - Silent purge
-- `/purgefrom` - Purge from user
-- `/slowmode` - Set slowmode
-- `/pin` - Pin message
-- `/unpin` - Unpin message
-- `/unpinall` - Unpin all
-- `/pinned` - View pinned messages
-- `/adminlist` - List admins
-- `/zombies` - Find deleted accounts
-- `/report` - Report message to admins
+- `/ban` `/unban` `/kick` `/mute` `/unmute`
+- `/warn` `/unwarn` `/warns` `/resetwarns` `/setwarnlimit` `/setwarnmode`
+- `/purge` `/spurge` `/purgefrom`
+- `/pin` `/unpin` `/unpinall` `/pinned`
+- `/report` `/adminlist` `/slowmode` `/zombies`
 
 ### Admin (11)
-- `/promote` - Promote user
-- `/demote` - Demote user
-- `/title` - Set admin title
-- `/setlog` - Set log channel
-- `/unsetlog` - Unset log channel
-- `/setdesc` - Set description
-- `/setgtitle` - Set group title
-- `/setgpic` - Set group photo
-- `/setsticker` - Set sticker set
-- `/delsticker` - Remove sticker set
-- `/invitelink` - Get invite link
+- `/promote` `/demote` `/title`
+- `/setgtitle` `/setgpic` `/setdesc`
+- `/setsticker` `/delsticker` `/invitelink`
+- `/setlog` `/unsetlog`
 
 ### Anti-Spam (17)
-- `/lock` - Lock chat type
-- `/unlock` - Unlock chat type
-- `/locks` - View current locks
-- `/locktypes` - List lockable types
-- `/setflood` - Set flood limit
-- `/flood` - View flood settings
-- `/setfloodmode` - Set flood action
-- `/blacklist` - View blacklist
-- `/addblacklist` - Add to blacklist
-- `/unblacklist` - Remove from blacklist
-- `/blacklistmode` - Set blacklist action
-- `/setcaptcha` - Enable/disable captcha
-- `/captchamode` - Set captcha type
-- `/captchatext` - Set captcha text
-- `/captchakick` - Set kick time
-- `/antiraid` - View antiraid status
-- `/setantiraid` - Configure antiraid
+- `/lock` `/unlock` `/locks` `/locktypes`
+- `/flood` `/setflood` `/setfloodmode`
+- `/blacklist` `/addblacklist` `/unblacklist` `/blacklistmode`
+- `/captchamode` `/setcaptcha` `/captchatext` `/captchakick`
+- `/antiraid` `/setantiraid`
 
 ### Greetings (10)
-- `/welcome` - Toggle welcome
-- `/setwelcome` - Set welcome message
-- `/resetwelcome` - Reset welcome
-- `/goodbye` - Toggle goodbye
-- `/setgoodbye` - Set goodbye message
-- `/resetgoodbye` - Reset goodbye
-- `/cleanwelcome` - Delete old welcomes
-- `/cleanservice` - Delete service messages
-- `/welcomemute` - Mute new users
-- `/welcomemutehelp` - Help for welcome mute
+- `/welcome` `/setwelcome` `/resetwelcome`
+- `/goodbye` `/setgoodbye` `/resetgoodbye`
+- `/cleanwelcome` `/cleanservice`
+- `/welcomemute` `/welcomemutehelp`
 
 ### Content (13)
-- `/save` - Save filter/note
-- `/get` - Get filter/note
-- `/clear` - Delete filter/note
-- `/clearall` - Delete all
-- `/notes` - List notes
-- `/filter` - Add filter
-- `/filters` - List filters
-- `/stop` - Stop filter
-- `/stopall` - Stop all filters
-- `/rules` - View rules
-- `/setrules` - Set rules
-- `/clearrules` - Clear rules
-- `/privaterules` - Toggle private rules
+- `/save` `/get` `/notes` `/clear` `/clearall`
+- `/filter` `/stop` `/stopall` `/filters`
+- `/rules` `/setrules` `/clearrules` `/privaterules`
 
 ### Federation (15)
-- `/newfed` - Create federation
-- `/delfed` - Delete federation
-- `/fedinfo` - Federation info
-- `/joinfed` - Join federation
-- `/leavefed` - Leave federation
-- `/fban` - Federation ban
-- `/unfban` - Federation unban
-- `/fednotif` - Federation notifies
-- `/chatfed` - Chat federation info
-- `/myfeds` - List my federations
-- `/fedadmins` - List fed admins
-- `/fedpromote` - Promote fed admin
-- `/feddemote` - Demote fed admin
-- `/frename` - Rename federation
-- `/fedbanlist` - List fed bans
+- `/newfed` `/delfed` `/joinfed` `/leavefed` `/chatfed`
+- `/fedinfo` `/fedpromote` `/feddemote` `/fedadmins`
+- `/fban` `/unfban` `/fedbanlist` `/myfeds` `/frename` `/fednotif`
 
-### Utility & Fun (16)
-- `/start` - Start bot
-- `/help` - Help menu
-- `/info` - User info
-- `/id` - Get ID
-- `/ping` - Check latency
-- `/stats` - Bot statistics
-- `/settings` - Group settings
-- `/connect` - Connect for settings
-- `/disconnect` - Disconnect
-- `/connection` - Connection status
-- `/allowconnect` - Allow connections
-- `/roll` - Roll dice
-- `/slap` - Slap user
-- `/pat` - Pat user
-- `/hug` - Hug user
-- `/runs` - Random run message
+### Utility (11)
+- `/start` `/help` `/info` `/id` `/ping` `/stats` `/settings`
+- `/connect` `/disconnect` `/connection` `/allowconnect`
 
-### AI (1)
-- `/chat` - Chat with AI
+### Fun (5)
+- `/hug` `/pat` `/slap` `/roll` `/runs`

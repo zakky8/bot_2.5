@@ -21,7 +21,7 @@ Deploy your bot system to a Virtual Private Server for 24/7 uptime.
 
 ```bash
 # Run this one-liner on fresh Ubuntu 22.04 VPS
-curl -fsSL https://raw.githubusercontent.com/your-repo/upgraded-bot-system/main/scripts/vps-install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/your-repo/upgraded-bot-system/main/scripts/install.sh | bash
 ```
 
 ## Manual Installation
@@ -57,7 +57,7 @@ curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
 sudo apt install -y nodejs
 
 # Install pnpm
-sudo npm install -g pnpm pm2
+sudo npm install -g pm2
 
 # Install PostgreSQL
 sudo apt install -y postgresql postgresql-contrib
@@ -123,8 +123,8 @@ sudo systemctl restart redis-server
 ```bash
 # Clone repository
 cd ~
-git clone https://github.com/your-repo/upgraded-bot-system.git
-cd upgraded-bot-system
+git clone https://github.com/zakky8/super-bot.git
+cd super-bot
 
 # Run database initialization
 sudo -u postgres psql -d bot_system -f scripts/init-db.sql

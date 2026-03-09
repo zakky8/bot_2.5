@@ -1,188 +1,81 @@
-# Command Reference
+# Command Reference — Super Bot v3.0
 
-## Telegram Bot Commands (105)
+## Telegram Bot Commands (104 Total)
 
-### Admin
-- /delsticker
-- /demote
-- /invitelink
-- /promote
-- /setdesc
-- /setgpic
-- /setgtitle
-- /setlog
-- /setsticker
-- /title
-- /unsetlog
+### AI (3)
+- `/chat <message>` — Ask Claude AI (FAQ-constrained)
+- `/ask <question>` — Alias for /chat
+- `/support <issue>` — Escalate directly to human moderator
+- `/aisetup` — Configure API key, model, reload FAQ (admin only)
 
-### AI
-- /chat (and strict mode handler)
+### Admin (11)
+- `/promote` `/demote` `/title` `/setgtitle` `/setgpic` `/setdesc`
+- `/setsticker` `/delsticker` `/invitelink` `/setlog` `/unsetlog`
 
-### Anti-Spam
-- /addblacklist
-- /antiraid
-- /blacklist
-- /blacklistmode
-- /captchakick
-- /captchamode
-- /captchatext
-- /flood
-- /lock
-- /locks
-- /locktypes
-- /setantiraid
-- /setcaptcha
-- /setflood
-- /setfloodmode
-- /unblacklist
-- /unlock
+### Anti-Spam (17)
+- `/lock` `/unlock` `/locks` `/locktypes`
+- `/flood` `/setflood` `/setfloodmode`
+- `/blacklist` `/addblacklist` `/unblacklist` `/blacklistmode`
+- `/captchamode` `/setcaptcha` `/captchatext` `/captchakick`
+- `/antiraid` `/setantiraid`
 
-### Content Management
-- /clear
-- /clearall
-- /clearrules
-- /filter
-- /filters
-- /get
-- /notes
-- /privaterules
-- /rules
-- /save
-- /setrules
-- /stop
-- /stopall
+### Content Management (13)
+- `/save` `/get` `/notes` `/clear` `/clearall`
+- `/filter` `/stop` `/stopall` `/filters`
+- `/rules` `/setrules` `/clearrules` `/privaterules`
 
-### Federation
-- /chatfed
-- /delfed
-- /fban
-- /fedadmins
-- /fedbanlist
-- /feddemote
-- /fedinfo
-- /fednotif
-- /fedprom
-- /fedstats
-- /fedsubs
-- /joinfed
-- /leavefed
-- /newfed
-- /unfban
+### Federation (15)
+- `/newfed` `/delfed` `/joinfed` `/leavefed` `/chatfed`
+- `/fedinfo` `/fedpromote` `/feddemote` `/fedadmins`
+- `/fban` `/unfban` `/fedbanlist` `/myfeds` `/frename` `/fednotif`
 
-### Greetings
-- /captcha
-- /cleanwelcome
-- /goodbye
-- /resetwelcome
-- /setgoodbye
-- /setwelcome
-- /testgoodbye
-- /testwelcome
-- /verify
-- /welcome
+### Fun (5)
+- `/hug` `/pat` `/slap` `/roll` `/runs`
 
-### Moderation
-- /adminlist
-- /ban
-- /kick
-- /mute
-- /pin
-- /purge
-- /purgefrom
-- /spurge
-- /tban
-- /tmute
-- /unban
-- /unmute
-- /unpin
-- /warn
-- /warnlimit
-- /warnmode
-- /warns
+### Greetings (10)
+- `/welcome` `/setwelcome` `/resetwelcome`
+- `/goodbye` `/setgoodbye` `/resetgoodbye`
+- `/cleanwelcome` `/cleanservice` `/welcomemute` `/welcomemutehelp`
 
-### Utility
-- /admincache
-- /help
-- /id
-- /info
-- /ping
-- /start
+### Moderation (22)
+- `/ban` `/unban` `/kick` `/mute` `/unmute`
+- `/warn` `/unwarn` `/warns` `/resetwarns` `/setwarnlimit` `/setwarnmode`
+- `/purge` `/spurge` `/purgefrom`
+- `/pin` `/unpin` `/unpinall` `/pinned`
+- `/report` `/adminlist` `/slowmode` `/zombies`
 
-### Fun (Others)
-- /roll
-- /slap
-- /tranylator
+### Utility (11)
+- `/start` `/help` `/info` `/id` `/ping` `/stats` `/settings`
+- `/connect` `/disconnect` `/connection` `/allowconnect`
 
-## Discord Bot Commands (56)
+---
 
-### AI
-- /chat
+## Discord Bot Commands (55 Total)
 
-### Custom Commands
-- /addcommand
-- /customcommand
-- /editcommand
-- /listcommands
-- /removecommand
+### AI (1)
+- `/chat message:<text>` — Ask Claude AI (FAQ-constrained)
+- `/chat clear:true` — Reset conversation history
 
-### Engagement
-- /birthday
-- /endgiveaway
-- /giveaway
-- /poll
-- /reminder
-- /reroll
-- /timer
+### Custom Commands (5)
+- `/addcommand` `/editcommand` `/removecommand` `/listcommands` `/customcommand`
 
-### Leveling
-- /addxp
-- /leaderboard
-- /levelchannel
-- /levelconfig
-- /levelmessage
-- /levelroles
-- /rank
-- /removexp
-- /resetlevels
-- /setlevel
-- /setxp
-- /xpmultiplier
+### Engagement (7)
+- `/poll` `/giveaway` `/endgiveaway` `/reroll` `/reminder` `/timer` `/birthday`
 
-### Moderation
-- /ban
-- /clear
-- /clearwarnings
-- /kick
-- /lockdown
-- /modlogs
-- /mute
-- /purge
-- /reason
-- /slowmode
-- /timeout
-- /unban
-- /unlock
-- /unmute
-- /warn
-- /warnings
+### Leveling (12)
+- `/rank` `/leaderboard` `/addxp` `/removexp` `/setxp` `/setlevel`
+- `/resetlevels` `/xpmultiplier` `/levelroles` `/levelconfig` `/levelmessage` `/levelchannel`
 
-### Reaction Roles
-- /addrr
-- /listrr
-- /reactionrole
-- /removerr
+### Moderation (16)
+- `/ban` `/unban` `/kick` `/mute` `/unmute` `/timeout`
+- `/warn` `/warnings` `/clearwarnings`
+- `/purge` `/clear` `/slowmode` `/lockdown` `/unlock` `/modlogs` `/reason`
 
-### Social
-- /reddit
-- /twitch
-- /twitter
-- /youtube
+### Reaction Roles (4)
+- `/reactionrole` `/addrr` `/removerr` `/listrr`
 
-### Utility
-- /avatar
-- /botinfo
-- /help
-- /ping
-- /serverinfo
-- /uptime
-- /userinfo
+### Social Alerts (4)
+- `/twitch` `/youtube` `/twitter` `/reddit`
+
+### Utility (7)
+- `/help` `/ping` `/serverinfo` `/userinfo` `/avatar` `/roleinfo` `/membercount`

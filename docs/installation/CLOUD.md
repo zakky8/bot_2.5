@@ -12,8 +12,8 @@ Deploy your bot system using Docker for easy portability and cloud deployment.
 ### 1. Clone Repository
 
 ```bash
-git clone https://github.com/your-repo/upgraded-bot-system.git
-cd upgraded-bot-system
+git clone https://github.com/zakky8/super-bot.git
+cd super-bot
 ```
 
 ### 2. Configure Environment
@@ -133,7 +133,7 @@ sudo usermod -aG docker ubuntu
 
 # Clone and deploy
 git clone <repo-url>
-cd upgraded-bot-system
+cd super-bot
 cp .env.example .env
 # Edit .env
 docker-compose up -d
@@ -359,8 +359,8 @@ Already implemented in Dockerfiles to reduce image size.
 ### Layer Caching
 ```dockerfile
 # Copy package files first
-COPY package.json pnpm-lock.yaml ./
-RUN pnpm install
+COPY package.json package-lock.json ./
+RUN npm ci
 # Then copy source (changes more frequently)
 COPY . .
 ```
@@ -371,7 +371,7 @@ COPY . .
 FROM node:18-alpine  # 40MB vs 900MB
 
 # Remove dev dependencies
-RUN pnpm install --prod
+RUN npm ci --prod
 ```
 
 ## Cost Optimization

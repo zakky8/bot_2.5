@@ -1,4 +1,4 @@
--- AI Schema Migration for Bot System v2.5
+-- AI Schema Migration for Super Bot v3.0 (Anthropic Claude)
 -- Run this after the main database initialization
 
 -- Create AI conversations table
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS ai_usage_logs (
     chat_id VARCHAR(255),
     platform VARCHAR(20) NOT NULL CHECK (platform IN ('discord', 'telegram')),
     model VARCHAR(255) NOT NULL,
-    provider VARCHAR(50) NOT NULL CHECK (provider IN ('openrouter', 'ollama')),
+    provider VARCHAR(50) NOT NULL CHECK (provider IN ('anthropic', 'ollama')),
     tokens_used INTEGER,
     cost DECIMAL(10, 6),
     response_time_ms INTEGER,
@@ -102,8 +102,8 @@ CREATE TRIGGER update_ai_settings_updated_at BEFORE UPDATE ON ai_settings
 -- Insert default AI settings
 INSERT INTO ai_settings (chat_id, platform, ai_enabled, default_model)
 VALUES 
-    ('default_discord', 'discord', TRUE, 'anthropic/claude-sonnet-4'),
-    ('default_telegram', 'telegram', TRUE, 'anthropic/claude-sonnet-4')
+    ('default_discord', 'discord', TRUE, 'claude-sonnet-4-6'),
+    ('default_telegram', 'telegram', TRUE, 'claude-sonnet-4-6')
 ON CONFLICT (chat_id, platform) DO NOTHING;
 
 -- Create view for AI usage statistics

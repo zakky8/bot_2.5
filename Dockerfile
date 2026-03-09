@@ -1,17 +1,17 @@
-FROM python:3.12-slim
+# Root Dockerfile — builds the shared library only.
+# For running both bots together use docker-compose.yml which builds
+# telegram-bot/Dockerfile and discord-bot/Dockerfile individually.
 
-WORKDIR /app
+FROM node:18-alpine AS shared-builder
 
-RUN apt-get update && apt-get install -y --no-install-recommends gcc \
-    && rm -rf /var/lib/apt/lists/*
+WORKDIR /shared
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY shared/package.json shared/package-lock.json ./
+RUN npm ci
 
-COPY . .
+COPY shared/ ./
+RUN npm run build
 
-# Never run containers as root
-RUN useradd -m appuser && chown -R appuser:appuser /app
-USER appuser
-
-CMD ["python", "main.py"]
+# This image is used as a build artefact by docker-compose.
+# It is not meant to be run directly.
+CMD ["echo", "Use docker-compose up to start the full bot stack."]

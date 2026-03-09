@@ -19,8 +19,8 @@ Complete guide for running the bot system on your local machine for development 
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-repo/upgraded-bot-system.git
-cd upgraded-bot-system
+git clone https://github.com/zakky8/super-bot.git
+cd super-bot
 ```
 
 ### 2. Install PostgreSQL
@@ -225,7 +225,7 @@ ping - Check bot latency
 cd telegram-bot
 
 # Using pnpm (recommended)
-pnpm install
+npm install
 
 # Or using npm
 npm install
@@ -238,7 +238,7 @@ yarn install
 ```bash
 cd ../discord-bot
 
-pnpm install
+npm install
 # or npm install
 ```
 
@@ -357,7 +357,7 @@ sudo systemctl start redis-server
 ```bash
 # Clear node_modules and reinstall
 rm -rf node_modules package-lock.json
-pnpm install
+npm install
 
 # Or
 npm ci
