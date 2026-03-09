@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  # PostgreSQL Database
+  # ── PostgreSQL Database ──────────────────────────────────────────────────────
   postgres:
     image: postgres:14-alpine
     container_name: bot-postgres
@@ -24,12 +24,12 @@ services:
       timeout: 5s
       retries: 5
 
-  # Redis Cache
+  # ── Redis Cache ──────────────────────────────────────────────────────────────
   redis:
     image: redis:7-alpine
     container_name: bot-redis
     restart: unless-stopped
-    command: redis-server --requirepass ${REDIS_PASSWORD}
+    command: redis-server --requirepass ${REDIS_PASSWORD:-}
     volumes:
       - redis_data:/data
     ports:
@@ -42,7 +42,19 @@ services:
       timeout: 5s
       retries: 5
 
-  # Telegram Bot
+  # ── Ollama (local AI fallback) ───────────────────────────────────────────────
+  ollama:
+    image: ollama/ollama:latest
+    container_name: bot-ollama
+    restart: unless-stopped
+    volumes:
+      - ollama_data:/root/.ollama
+    ports:
+      - "11434:11434"
+    networks:
+      - bot-network
+
+  # ── Telegram Bot ─────────────────────────────────────────────────────────────
   telegram-bot:
     build:
       context: ./telegram-bot
@@ -58,8 +70,13 @@ services:
       NODE_ENV: production
       BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
       DATABASE_URL: postgresql://botuser:${POSTGRES_PASSWORD}@postgres:5432/bot_system
-      REDIS_URL: redis://:${REDIS_PASSWORD}@redis:6379
-      ADMIN_IDS: ${TELEGRAM_ADMIN_IDS}
+      REDIS_URL: redis://:${REDIS_PASSWORD:-}@redis:6379
+      ADMIN_IDS: ${TELEGRAM_ADMIN_IDS:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+      ANTHROPIC_MODEL: ${ANTHROPIC_MODEL:-claude-sonnet-4-6}
+      BOT_NAME: ${BOT_NAME:-SupportBot}
+      HUMAN_MODERATOR_CHAT_ID: ${HUMAN_MODERATOR_CHAT_ID:-}
+      OLLAMA_HOST: http://ollama:11434
       LOG_LEVEL: ${LOG_LEVEL:-info}
     volumes:
       - ./telegram-bot/logs:/app/logs
@@ -71,7 +88,7 @@ services:
         max-size: "10m"
         max-file: "3"
 
-  # Discord Bot
+  # ── Discord Bot ───────────────────────────────────────────────────────────────
   discord-bot:
     build:
       context: ./discord-bot
@@ -88,7 +105,12 @@ services:
       BOT_TOKEN: ${DISCORD_BOT_TOKEN}
       CLIENT_ID: ${DISCORD_CLIENT_ID}
       DATABASE_URL: postgresql://botuser:${POSTGRES_PASSWORD}@postgres:5432/bot_system
-      REDIS_URL: redis://:${REDIS_PASSWORD}@redis:6379
+      REDIS_URL: redis://:${REDIS_PASSWORD:-}@redis:6379
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+      ANTHROPIC_MODEL: ${ANTHROPIC_MODEL:-claude-sonnet-4-6}
+      BOT_NAME: ${BOT_NAME:-SupportBot}
+      HUMAN_MODERATOR_CHANNEL: ${HUMAN_MODERATOR_CHANNEL:-}
+      OLLAMA_HOST: http://ollama:11434
       LOG_LEVEL: ${LOG_LEVEL:-info}
     volumes:
       - ./discord-bot/logs:/app/logs
@@ -107,3 +129,4 @@ networks:
 volumes:
   postgres_data:
   redis_data:
+  ollama_data:
