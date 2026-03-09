@@ -1,0 +1,42 @@
+{
+    "name": "bot-upgrade-v2",
+    "version": "2.0.0",
+    "description": "Multi-platform moderation bot system (Discord + Telegram)",
+    "main": "index.js",
+    "scripts": {
+        "postinstall": "npm run install:all",
+        "install:all": "npm install && npm run install:shared && npm run install:discord && npm run install:telegram",
+        "install:shared": "cd shared && npm install",
+        "install:discord": "cd discord-bot && npm install",
+        "install:telegram": "cd telegram-bot && npm install",
+        "build": "npm run build:shared && npm run build:discord && npm run build:telegram",
+        "build:shared": "cd shared && npm run build",
+        "build:discord": "cd discord-bot && npm run build",
+        "build:telegram": "cd telegram-bot && npm run build",
+        "start": "npm run start:discord & npm run start:telegram",
+        "start:discord": "cd discord-bot && npm start",
+        "start:telegram": "cd telegram-bot && npm start",
+        "dev": "npm run dev:discord & npm run dev:telegram",
+        "dev:discord": "cd discord-bot && npm run dev",
+        "dev:telegram": "cd telegram-bot && npm run dev",
+        "test": "npm run test:discord && npm run test:telegram",
+        "test:discord": "cd discord-bot && npm test",
+        "test:telegram": "cd telegram-bot && npm test",
+        "lint": "npm run lint:discord && npm run lint:telegram",
+        "lint:discord": "cd discord-bot && npm run lint",
+        "lint:telegram": "cd telegram-bot && npm run lint"
+    },
+    "keywords": [
+        "discord",
+        "telegram",
+        "bot",
+        "moderation",
+        "typescript"
+    ],
+    "author": "Bot System Team",
+    "license": "MIT",
+    "devDependencies": {
+        "concurrently": "^8.2.2",
+        "typescript": "^5.3.3"
+    }
+}

@@ -1,0 +1,30 @@
+{
+    "name": "@bot/shared",
+    "version": "1.0.0",
+    "description": "Shared code for Discord and Telegram bots",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "tsc",
+        "lint": "eslint src --ext .ts",
+        "test": "npx jest"
+    },
+    "dependencies": {
+        "@openrouter/sdk": "*",
+        "ioredis": "^5.3.0",
+        "ollama": "^0.5.0",
+        "pg": "^8.11.0",
+        "winston": "^3.11.0"
+    },
+    "devDependencies": {
+        "@types/jest": "^30.0.0",
+        "@types/node": "^20.11.0",
+        "@types/pg": "^8.11.0",
+        "@typescript-eslint/eslint-plugin": "^8.55.0",
+        "@typescript-eslint/parser": "^8.55.0",
+        "eslint": "^8.57.1",
+        "jest-environment-jsdom": "^30.2.0",
+        "ts-jest": "^29.4.6",
+        "typescript": "^5.3.3"
+    }
+}
